@@ -1,0 +1,34 @@
+name: Windows
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-2019
+    strategy:
+      matrix:
+        node-version: [10.x]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    # - name: Installation
+    #   run: yarn || yarn || yarn # 3 attemps to avoid timeout errors...
+    # - name: Docusaurus 1 Build
+    #   run: yarn build:v1
+    # - name: Docusaurus 2 Build
+    #   run: yarn build:v2
+      # env:
+      #   CI: true
+    # - name: Docusaurus Jest Tests
+    #   run: yarn test
+    - name: My Tests
+      run: node index
+    
